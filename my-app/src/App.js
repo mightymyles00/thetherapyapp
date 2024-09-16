@@ -1,27 +1,45 @@
 import './App.css';
 import welcomeImage from './welcome.png';
-import {Panel, PanelGroup} from 'rsuite'
+import Card from 'react-bootstrap/Card'
+//import CardBody from 'react-bootstrap/CardBody'
+import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container'
+
+
 
 function App() {
   return (
-    <div className="App">
-      <Panel.Body bgcolor='red'>        
-      <table>
-        <tr>
-        <td> <img src={welcomeImage} alt='meo' height='150px'/> </td>
-        <td align='left'>
-          <p>Good Morning, Myles</p>
-          <p>Came back for more brain exercise? </p>
-        </td>
-      </tr>
-      </table>
+    <Container>
 
-        
-        <button> New Game </button>
-      </Panel.Body>
+        <Card id='welcome'>        
+            <Card.Body> Hello </Card.Body>
+            <p> hello </p>
 
-    </div>
+        </Card>
+      </Container>
+
   );
-}
+};
+
+/*const styles = {
+  width: "100%",
+  height: 600,
+  marginTop: "20px",
+  border: "1px solid black"
+};*/
 
 export default App;
+
+
+/*<table>
+            <tr>
+              <td>
+           <img src={welcomeImage} alt='meo' height='150px'/>
+              </td>
+           </tr>
+           <tr>
+            
+          <p>Good Morning, Myles</p>
+          <p>Came back for more brain exercise? </p>
+          </tr>
+          </table>*/
