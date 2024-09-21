@@ -22,12 +22,37 @@ button {
 table {
   border-collapse: collapse;
   margin: auto;
+  border-color: #fff;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: cyan;
+  white-space: pre-wrap;
+
+  
 }
 
 button:hover {
   background: #c23866;
   color: #fff;
 }
+
+.WelcomeMessage {
+  text-align: center;
+  background-color: gray;
+  width: 75%;
+  font-family:Arial, Helvetica, sans-serif;
+  font: bold;
+  border-radius: 25px;
+  font-size: larger;
+  text-wrap: wrap;
+  white-space: pre-wrap;
+}
+
 
 /*
 @media (prefers-reduced-motion: no-preference) {
