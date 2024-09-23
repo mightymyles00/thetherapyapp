@@ -24,7 +24,6 @@
 
 
 button {
-  background: none;
   border: 2px solid;
   padding: 6px 12px;
   border-radius: 4px;
@@ -72,6 +71,26 @@ button:hover {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
+}
+
+.simon-grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  grid-gap: 20px;
+}
+
+.SimonContainer {
+  text-align: center;
+  background-color: #D9D9D9;
+  font-family:Arial, Helvetica, sans-serif;
+  font: bold;
+  border-radius: 25px;
+  font-size: larger;
+  text-wrap: wrap;
+  white-space: pre-wrap;
+  margin: 20px;
+
 }
 
 .back, .front {
