@@ -7,7 +7,6 @@ import Pic3 from './components(matching)/CardImages/3.png'
 import Pic4 from './components(matching)/CardImages/4.png'
 import Pic5 from './components(matching)/CardImages/5.png'
 import Pic6 from './components(matching)/CardImages/6.png'
-import BackPic from './components(matching)/CardImages/background.jpg'
 import SingleCard from './components(matching)/SingleCard';
 
 
@@ -52,12 +51,16 @@ function Match() {
   const [turns, setTurns] = useState(0)
   const [choiceOne, setChoiceOne] = useState(null)
   const [choiceTwo, setChoiceTwo] = useState(null)
+  const [disabled, setDisabled] = useState(false)
   
   //shuffle cards
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
       .sort(() => Math.random() - 0.5)
       .map((card) => ({...card, id: Math.random()   }))
+    
+    setChoiceOne(null)
+    setChoiceTwo(null)
     setCards(shuffledCards)
     setTurns(0)
   }
@@ -69,13 +72,17 @@ function Match() {
 
   // compare 2 selected cards
   useEffect(() => {
-    console.log(choiceOne)
+
     if (choiceOne && choiceTwo) {
+      setDisabled(true)
+
+
       if (choiceOne.card === choiceTwo.card) {
         console.log("the cards match")
         setCards(prevCards => {
           return prevCards.map(card => {
             if(card.src === choiceOne.src) {
+
               return {...card, matched: true}
             } else {
               return card
@@ -86,8 +93,7 @@ function Match() {
         })
         resetTurn()
       } else {
-        console.log("the cards do not match")
-        resetTurn()
+        setTimeout(() => resetTurn(), 1000)
       }
     }
   }, [choiceOne, choiceTwo])
@@ -100,7 +106,13 @@ function Match() {
     setChoiceOne(null)
     setChoiceTwo(null)
     setTurns(prevTurns => prevTurns + 1)
+    setDisabled(false)
   }
+
+  //start game automatically
+  useEffect(() => {
+    shuffleCards()
+  }, [])
 
 
   return (
@@ -119,10 +131,12 @@ function Match() {
               key={card.id} 
               card={card} 
               handleChoice={handleChoice}
-              flipped={card === choiceOne || card === choiceTwo || card.matched} 
+              flipped={card === choiceOne || card === choiceTwo || card.matched}
+              disabled={disabled} 
             />
           ))}
           </div>
+          <p> Turns: {turns}</p>
         </table> 
         
         
