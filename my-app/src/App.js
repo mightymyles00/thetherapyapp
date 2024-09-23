@@ -4,6 +4,11 @@ import startButton from './start.png';
 import activitiesButton from './activities.png';
 import statsButton from './stats.png'
 import petButton from './pet.png'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+
+
+import MatchPage from './Match.js';
+
 
 
 
@@ -16,7 +21,19 @@ import Container from 'react-bootstrap/Container'
 
 function App() {
   return (
-    <><Container className='container'>
+
+    <>
+    
+    
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<MatchPage />} />
+        <Route path="/matching" element={<MatchPage />} />
+      </Routes>
+    </BrowserRouter>
+
+    
+    <Container className='container'>
       <table>
         <tr>
       <Card className='WelcomeMessage'>
