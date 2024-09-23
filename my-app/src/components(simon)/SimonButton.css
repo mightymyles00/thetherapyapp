@@ -5,15 +5,9 @@ button {
     margin: 1px;
   }
 
-button:hover {
-    
-
-}
-  
-.color-buttons {
-  
-}
-
 .bright-buttons {
-  filter: brightness(150%)
+    color: white;
+    background-color: white;
+    transform: scale(1.2);
+    
 }

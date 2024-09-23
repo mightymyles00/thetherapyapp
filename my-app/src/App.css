@@ -53,6 +53,8 @@ button:hover {
   color: #fff;
 }
 
+
+
 .WelcomeMessage {
   text-align: center;
   background-color: #D9D9D9;
@@ -88,9 +90,7 @@ button:hover {
   border-radius: 25px;
   font-size: larger;
   text-wrap: wrap;
-  white-space: pre-wrap;
   margin: 20px;
-
 }
 
 .back, .front {
