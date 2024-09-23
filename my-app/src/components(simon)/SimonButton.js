@@ -2,10 +2,11 @@ import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import './SimonButton.css'
 import { useState } from 'react'
+import React, { forwardRef } from 'react'
 
 
 
-function GameBtn( {border, bg, onClick}) {
+const GameBtn = forwardRef(( {border, bg, onClick}, ref) => (
     /*var roundLocation
 
     if (border === 'top-left') 
@@ -28,15 +29,12 @@ function GameBtn( {border, bg, onClick}) {
     else {
         return;
     }*/
-
-
-
-
-    return (
-        <button 
+    <button 
         style={{background: bg, borderRadius: border}} 
-        onClick={onClick} /> 
-    )
-}
+        onClick={onClick}
+        ref={ref}
+    /> 
+    ));
+
 
 export default GameBtn;

@@ -10,3 +10,10 @@ button:hover {
 
 }
   
+.color-buttons {
+  
+}
+
+.bright-buttons {
+  filter: brightness(150%)
+}
