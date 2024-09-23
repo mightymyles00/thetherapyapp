@@ -4,10 +4,8 @@ import startButton from './start.png';
 import activitiesButton from './activities.png';
 import statsButton from './stats.png'
 import petButton from './pet.png'
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-
-
-import MatchPage from './Match.js';
+import {BrowserRouter, Routes, Route, createBrowserRouter} from 'react-router-dom'
+import ActivitesPage from './Activities.js';
 
 
 
@@ -17,22 +15,23 @@ import Card from 'react-bootstrap/Card'
 //import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />
+  },
+  {
+    path: "activities",
+    element: <ActivitesPage />
+  }
+])
 
 
 function App() {
   return (
 
     <>
-    
-    
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<MatchPage />} />
-        <Route path="/matching" element={<MatchPage />} />
-      </Routes>
-    </BrowserRouter>
 
-    
     <Container className='container'>
       <table>
         <tr>
@@ -41,7 +40,7 @@ function App() {
           <table>
             <tr>
               <td>
-                <img src={welcomeImage} alt='meo' height='200px' style={{ borderRadius: "25px" }} />
+                <img src={welcomeImage}  alt='meo' height='200px' style={{ borderRadius: "25px" }} />
               </td>
               <td>
                 <p>Good Morning, Myles</p>
@@ -56,32 +55,34 @@ function App() {
       <br></br>
       <tr>
         <Card className='WelcomeMessage'>
-          <table border={4}>
+          <table>
             <tr aria-rowspan={2}>
               <td colSpan={2}>
                 <button> <img src={startButton} alt='start' height='110'/> </button>
               </td>
             </tr>
             <tr>
-              
+
               <td width={'50%'}>
-                <button> <img src={activitiesButton} alt='activities' height={175}/> </button> 
+                <a href='/activities'>
+                <button> <img src={activitiesButton} alt='activities' height={175}/> </button>
+                </a>
               </td>
               <tr>
                 <button> <img src={statsButton} alt='stats' height={100}/> </button>
 
                 <button> <img src={petButton} alt='stats' height={75}/> </button>
               </tr>
-              
+
             </tr>
-            
+
           </table>
         </Card>
         </tr>
       </table>
 
       </Container>
-      
+
   </>
   );
 };
@@ -103,7 +104,7 @@ export default App;
               </td>
            </tr>
            <tr>
-            
+
           <p>Good Morning, Myles</p>
           <p>Came back for more brain exercise? </p>
           </tr>
