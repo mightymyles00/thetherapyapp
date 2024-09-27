@@ -14,6 +14,7 @@ import Card from 'react-bootstrap/Card'
 //import CardBody from 'react-bootstrap/CardBody'
 //import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
+import Timer from './Timer.js';
 
 const router = createBrowserRouter([
   {
@@ -58,7 +59,7 @@ function App() {
           <table>
             <tr aria-rowspan={2}>
               <td colSpan={2}>
-                <button> <img src={startButton} alt='start' height='110'/> </button>
+                <button style={{width: "100%", alignContent: "center"}}> <img src={startButton} alt='start'/> </button>
               </td>
             </tr>
             <tr>

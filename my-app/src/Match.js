@@ -1,5 +1,6 @@
 import './App.css';
 import Container from 'react-bootstrap/Container'
+import Card from 'react-bootstrap/Card'
 import { useEffect, useState } from 'react'
 import Pic1 from './components(matching)/CardImages/1.png'
 import Pic2 from './components(matching)/CardImages/2.png'
@@ -7,8 +8,8 @@ import Pic3 from './components(matching)/CardImages/3.png'
 import Pic4 from './components(matching)/CardImages/4.png'
 import Pic5 from './components(matching)/CardImages/5.png'
 import Pic6 from './components(matching)/CardImages/6.png'
-import SingleCard from './components(matching)/SingleCard';
-
+import SingleCard from './components(matching)/SingleCard'
+import Timer from './Timer.js'
 
 const cardImages = [
   {"src": Pic1,
@@ -52,7 +53,10 @@ function Match() {
   const [choiceOne, setChoiceOne] = useState(null)
   const [choiceTwo, setChoiceTwo] = useState(null)
   const [disabled, setDisabled] = useState(false)
-  
+  const [timer, setTimer] = useState(0)
+  const [running, setRunning] = useState(false)
+  const [matchedCards, setMatchedCards] = useState(0)
+
   //shuffle cards
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
@@ -63,6 +67,10 @@ function Match() {
     setChoiceTwo(null)
     setCards(shuffledCards)
     setTurns(0)
+    setRunning(true)
+    setMatchedCards(0)
+
+
   }
   
   // handle a choice
@@ -79,14 +87,16 @@ function Match() {
 
       if (choiceOne.card === choiceTwo.card) {
         console.log("the cards match")
+        setMatchedCards(matchedCards + 1)
         setCards(prevCards => {
           return prevCards.map(card => {
             if(card.src === choiceOne.src) {
-
               return {...card, matched: true}
+
             } else {
               return card
             }
+            
           }
 
           )
@@ -94,9 +104,10 @@ function Match() {
         resetTurn()
       } else {
         setTimeout(() => resetTurn(), 1000)
-      }
+      }      
     }
-  }, [choiceOne, choiceTwo])
+    checkMatched()
+  }, [choiceOne, choiceTwo, matchedCards])
 
   //console.log(cards)
 
@@ -109,9 +120,17 @@ function Match() {
     setDisabled(false)
   }
 
-  //start game automatically
+  function checkMatched() {
+    if (matchedCards === 6) {
+      alert("You Did It!");
+      setRunning(false)
+    }
+  }
+
+
+  //start game automatically & when you hit start
   useEffect(() => {
-    shuffleCards()
+    shuffleCards() 
   }, [])
 
 
@@ -121,9 +140,13 @@ function Match() {
 
         <table>
           <tr>
-            <h1> Match Game </h1>
+            <Card className='headerText'>
+                <Card.Body>
+                    <p>Match all the cards to continue to the next area.</p>
+                </Card.Body>
+            </Card>
           </tr>
-          <button onClick={shuffleCards}> Start </button>
+          <button style={{height: "40px", alignContent: 'center'}} onClick={shuffleCards} disabled={false}> Start </button>
 
           <div className='card-grid'>
           {cards.map(card => (
