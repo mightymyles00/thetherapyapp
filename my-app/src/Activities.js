@@ -4,7 +4,7 @@ import MatchButton from './components(activities)/matching.png'
 import ReactButton from './components(activities)/reactionary.png'
 import PuzzleButton from './components(activities)/puzzle.png'
 //import ReactPage from './React.js';
-//import PuzzlePage from './Puzzle.js'
+import PuzzlePage from './Puzzle.js'
 import {BrowserRouter, Routes, Route, createBrowserRouter} from 'react-router-dom'
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
@@ -68,7 +68,9 @@ function Activites() {
             </tr>
             <tr>
               <td>
+                <a href='/puzzle'>
                 <button> <img src={PuzzleButton} alt='start' height='110'/> </button>
+                </a>
               </td>
               <td>
                 <button> <img src={ReactButton} alt='start' height='110'/> </button>

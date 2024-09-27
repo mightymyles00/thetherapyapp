@@ -5,6 +5,8 @@ import App from './App';
 import MatchPage from './Match';
 import ActivitesPage from './Activities';
 import SimonPage from './Simon';
+import PuzzlePage from './Puzzle';
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -30,7 +32,7 @@ const router = createBrowserRouter([
   },
   {
       path: "puzzle",
-      //element: <PuzzlePage />
+      element: <PuzzlePage />
   },
   {
       path: "reactionary",
