@@ -29,8 +29,12 @@ function Reactionary() {
     const midRef = useRef(null);
     const lowRef = useRef(null);
 
+
+    const MAX_COUNTER_METER = 3
     const [counterMeter, setCounterMeter] = useState(0)
-    const [bossHealth, setBossHealth] = useState(3)
+
+    const MAX_BOSS_HEALTH = 3
+    const [bossHealth, setBossHealth] = useState(MAX_BOSS_HEALTH)
     const [charDamage, setCharDamage] = useState (0)
 
 
@@ -85,6 +89,9 @@ function Reactionary() {
     const handleClick =(e) => {
         //blinkButton("MidButton")
         hit.play()
+        setCounterMeter(counterMeter + 1)
+        console.log(counterMeter)
+
 
     }
     
@@ -94,7 +101,26 @@ function Reactionary() {
         setCounterMeter(0)
 
     }
+
+
+    function ActionButtons() {
+        return (
+            <>
+                <button id='ActionButton' className='HighButton' ref={highRef}> HIGH! </button>
+                <button id='ActionButton' className='MidButton' ref={midRef} onClick={handleClick}> MID! </button>
+                <button id='ActionButton' className='LowButton' ref={lowRef}> LOW! </button>
+            </>
+        );
+    } 
     
+    function THECounterButton() {
+        return (
+            <>
+            <button className='CounterButton' onClick={handleCounterAttack}> COUNTER! </button>
+            </>
+        );
+    } 
+
 
 
 
@@ -113,17 +139,25 @@ function Reactionary() {
             </Card>
           </tr>
         <tr>
-          <div className='ActionWindow'></div>
+          <div className='ActionWindow'>
+
+            
+          </div>
         </tr>
         <tr>
-            <br></br>
+            <div className='CounterMeter'>
+                <div className='CounterMeterFill' style={{width : `${counterMeter/MAX_COUNTER_METER * 100}%`}}>
+                    {" "}
+                </div> 
+            </div>
+        </tr>
+        <tr>
           <div className='Button Window'>
-            <button id='ActionButton' className='HighButton' ref={highRef}> HIGH! </button>
-            <button id='ActionButton' className='MidButton' ref={midRef} onClick={handleClick}> MID! </button>
-            <button id='ActionButton' className='LowButton' ref={lowRef}> LOW! </button>
-          </div>
-          <div className='Counter Window'>
-            <button className='CounterButton'> COUNTER! </button>
+            { counterMeter === MAX_COUNTER_METER ?
+                <THECounterButton />
+                : <ActionButtons />
+            }
+
           </div>
         </tr>
         </table> 
