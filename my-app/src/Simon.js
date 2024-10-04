@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import SimonButton from './components(simon)/SimonButton.js'
 import { useState, useRef, useEffect } from 'react';
+import beepSound from './components(simon)/beep.wav'
 
 
 const colors = ["green", "red", "yellow", "blue"]

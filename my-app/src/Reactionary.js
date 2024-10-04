@@ -1,8 +1,8 @@
 import './components(reactionary)/Reactionary.css';
 import {BrowserRouter, Routes, Route, createBrowserRouter} from 'react-router-dom'
 import { useState, useRef, useEffect } from 'react';
-
-
+import beepSound from './components(reactionary)/beep.wav'
+import hitSound from './components(reactionary)/hit.mp3'
 
 
 import Card from 'react-bootstrap/Card'
@@ -12,7 +12,8 @@ import Container from 'react-bootstrap/Container'
 import Timer from './Timer.js';
 
 const dodgeWindow = 3000; // 3 secs
-
+const beep = new Audio(beepSound)
+const hit = new Audio(hitSound)
 
 
 
@@ -28,11 +29,24 @@ function Reactionary() {
     const midRef = useRef(null);
     const lowRef = useRef(null);
 
+    const [counterMeter, setCounterMeter] = useState(0)
+    const [bossHealth, setBossHealth] = useState(3)
+    const [charDamage, setCharDamage] = useState (0)
+
 
 
     const DodgeHigh = () => {
         console.log("JUMP")
-        blinkButton('high')
+        blinkButton('HighButton')
+        /*
+        If button is pressed {
+            setCounterMeter(counterMeter + 1);
+        }
+        else {
+            setCharDamage(charDamage + 1);
+        }
+        */
+
     }
 
 
@@ -44,13 +58,15 @@ function Reactionary() {
         if (actionButton === "LowButton") ref = lowRef
 
         let count = 0;
+        let buttonClicked = false
         const totalBlinks = 5;
         const blinkInterval = 100;  // time in milliseconds (500ms = 0.5s)
         
         const interval = setInterval(() => {
-          if(count % 2 === 0)
+          if(count % 2 === 0) {
             ref.current.classList.add('ButtonFlash');
-          else
+            beep.play();
+          } else
             ref.current.classList.remove('ButtonFlash');
 
           count++;
@@ -67,10 +83,17 @@ function Reactionary() {
       }
     
     const handleClick =(e) => {
-        blinkButton("HighButton")
+        //blinkButton("MidButton")
+        hit.play()
 
     }
     
+    const handleCounterAttack = (e) => {
+        hit.play()
+        setBossHealth(bossHealth - 1)
+        setCounterMeter(0)
+
+    }
     
 
 
@@ -98,7 +121,9 @@ function Reactionary() {
             <button id='ActionButton' className='HighButton' ref={highRef}> HIGH! </button>
             <button id='ActionButton' className='MidButton' ref={midRef} onClick={handleClick}> MID! </button>
             <button id='ActionButton' className='LowButton' ref={lowRef}> LOW! </button>
-
+          </div>
+          <div className='Counter Window'>
+            <button className='CounterButton'> COUNTER! </button>
           </div>
         </tr>
         </table> 
