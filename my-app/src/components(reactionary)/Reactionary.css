@@ -1,0 +1,17 @@
+#ActionButton {
+    height: 50px;
+    width: 75%;
+}
+
+.ButtonFlash {
+    background-color: black;
+    color:white;
+
+}
+
+
+.ActionWindow {
+    background-color: aqua;
+    width: 400px;
+    height:300px
+}

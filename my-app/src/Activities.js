@@ -73,7 +73,9 @@ function Activites() {
                 </a>
               </td>
               <td>
-                <button> <img src={ReactButton} alt='start' height='110'/> </button>
+              <a href='/reactionary'>
+              <button> <img src={ReactButton} alt='start' height='110'/> </button>
+                </a>
 
               </td>
             </tr>

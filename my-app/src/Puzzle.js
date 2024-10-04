@@ -17,11 +17,17 @@ import Container from 'react-bootstrap/Container'
 
 const Puzzle = () => {
     const [positions, setPositions] = useState([...Array(16).keys()]);
+    //correctPosition = use
+    const [solved, setSolved] = useState(false);
+    const [pieces, setPieces] = useState([
+        { id: 1, position: { left: 50, top: 50 }, correctPosition: { left: 100, top: 100 } },
+    ])
 
     // Handling the start of a drag event
     const handleDragStart = (e,position) => {
         e.dataTransfer.setData("text/plain", position)
     };
+    
 
     const handleDrop = (e, position) => {
         e.preventDefault();
@@ -32,18 +38,34 @@ const Puzzle = () => {
             [newPos[originalPosition], newPos[position]] = [
                 newPos[position],
                 newPos[originalPosition]
+                
             ];
             return newPos
         });
+        
     };
 
     const handleDragOver = (e) => {
         e.preventDefault();
     }
+
+    const isSolved = (id) => {
+        const solved = false
+        for (let i = 0; i < 16; i++)
+        {
+            //solved && (positions.indexOf(i) === parseInt(document.getElementById(3)))   
+        }
+        //positions.findIndex
+
+
+        
+        
+    }
     
 
 
     useEffect(() => {
+         
         //Shuffle the positions
         setPositions((prevPositions) => {
             const newPos = [...prevPositions];
@@ -82,6 +104,7 @@ const Puzzle = () => {
                 const y = Math.floor(pos/4)*100;
                 return (
                     <div
+                    id={pos}
                     key={index}
                     className="puzzle-piece"
                     draggable
@@ -92,7 +115,7 @@ const Puzzle = () => {
                         backgroundImage: `url('${ReferenceImage}')`,
                         backgroundPosition: `-${x}px -${y}px`
                     }}
-                />
+                > {pos}</div>
                 );
             })
             }

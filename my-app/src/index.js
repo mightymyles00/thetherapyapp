@@ -6,6 +6,7 @@ import MatchPage from './Match';
 import ActivitesPage from './Activities';
 import SimonPage from './Simon';
 import PuzzlePage from './Puzzle';
+import ReactPage from './Reactionary';
 
 import {
   createBrowserRouter,
@@ -36,7 +37,7 @@ const router = createBrowserRouter([
   },
   {
       path: "reactionary",
-      //element: <ReactPage />
+      element: <ReactPage />
   },
 
 ]);
