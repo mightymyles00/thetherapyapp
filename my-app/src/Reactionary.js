@@ -28,6 +28,7 @@ function Reactionary() {
     const highRef = useRef(null);
     const midRef = useRef(null);
     const lowRef = useRef(null);
+    const [input, setInput] = useState('h')
 
 
     const MAX_COUNTER_METER = 3
@@ -39,19 +40,31 @@ function Reactionary() {
 
 
 
-    const DodgeHigh = () => {
-        console.log("JUMP")
-        blinkButton('HighButton')
-        /*
-        If button is pressed {
-            setCounterMeter(counterMeter + 1);
+
+
+    const handleDodgeHigh = () => {
+        //console.log("JUMP")
+        if(counterMeter !== (MAX_COUNTER_METER - 1))
+          blinkButton('HighButton')
+        if (input === "high")
+        {
+          console.log("block confirmed")
+          setCounterMeter(counterMeter + 1);
         }
-        else {
-            setCharDamage(charDamage + 1);
+        else
+        {
+          setCharDamage(charDamage + 1)
+          console.log("player hit")
         }
-        */
+        setInput('')
+
 
     }
+
+    const handleHighBlock = () => {
+      setInput("high")
+
+    };
 
 
     function blinkButton(actionButton) {
@@ -81,16 +94,26 @@ function Reactionary() {
             clearInterval(interval);
             ref.current.classList.remove('ButtonFlash'); // Ensure it's visible after blinking
           }
+          /*if(input === "high")
+          {
+            hit.play()
+            console.log("hit confirmed")
+            clearInterval(interval);
+            buttonClicked = true
+            setInput('')
+          }*/
+
+          
           //ref.current.classList.remove('ButtonFlash');
 
         }, blinkInterval);
       }
     
     const handleClick =(e) => {
-        //blinkButton("MidButton")
-        hit.play()
-        setCounterMeter(counterMeter + 1)
-        console.log(counterMeter)
+        blinkButton("HighButton")
+        //hit.play()
+        //setCounterMeter(counterMeter + 1)
+        //console.log(counterMeter)
 
 
     }
@@ -106,8 +129,8 @@ function Reactionary() {
     function ActionButtons() {
         return (
             <>
-                <button id='ActionButton' className='HighButton' ref={highRef}> HIGH! </button>
-                <button id='ActionButton' className='MidButton' ref={midRef} onClick={handleClick}> MID! </button>
+                <button id='ActionButton' className='HighButton' ref={highRef} onClick={handleHighBlock}> HIGH! </button>
+                <button id='ActionButton' className='MidButton' ref={midRef} onClick={handleDodgeHigh}> MID! </button>
                 <button id='ActionButton' className='LowButton' ref={lowRef}> LOW! </button>
             </>
         );
