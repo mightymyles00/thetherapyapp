@@ -59,16 +59,17 @@ function Reactionary() {
     const highRef = useRef(null);
     const midRef = useRef(null);
     const lowRef = useRef(null);
-    const [input, setInput] = useState('')
-    const [image, setImage] = useState(netural)
+    const [input, setInput] = useState('');
+    const [image, setImage] = useState(netural);
 
 
-    const MAX_COUNTER_METER = 3
-    const [counterMeter, setCounterMeter] = useState(0)
+    const MAX_COUNTER_METER = 3;
+    const [counterMeter, setCounterMeter] = useState(0);
+    const [showCounterButton, setShowCounterButton] = useState(false);
 
-    const MAX_BOSS_HEALTH = 3
-    const [bossHealth, setBossHealth] = useState(MAX_BOSS_HEALTH)
-    const [charDamage, setCharDamage] = useState (0)
+    const MAX_BOSS_HEALTH = 3;
+    const [bossHealth, setBossHealth] = useState(MAX_BOSS_HEALTH);
+    const [charDamage, setCharDamage] = useState(0);
 
 
     
@@ -77,7 +78,9 @@ function Reactionary() {
     const handleDodgeHigh = () => {
         //console.log("JUMP")
         if(counterMeter !== (MAX_COUNTER_METER - 1))
+        {
           blinkButton('HighButton')
+        }
         if (input === "high")
         {
           console.log("block confirmed")
@@ -97,10 +100,6 @@ function Reactionary() {
 
     }
 
-    useEffect(() => {
-
-
-    }  ,[]);
 
     const handleHighBlock = () => {
       setInput("high")
@@ -109,12 +108,12 @@ function Reactionary() {
     };
 
 
-    function blinkButton(actionButton) {
+    const blinkButton = (actionButton) => {
         let ref = null;
 
-        if (actionButton === "HighButton") ref = highRef
-        if (actionButton === "MidButton") ref = midRef
-        if (actionButton === "LowButton") ref = lowRef
+        if (actionButton === "HighButton") {ref = highRef}
+        if (actionButton === "MidButton") {ref = midRef}
+        if (actionButton === "LowButton") {ref = lowRef}
 
         let count = 0;
         let buttonClicked = false
@@ -125,9 +124,9 @@ function Reactionary() {
           if(count % 2 === 0) {
             ref.current.classList.add('ButtonFlash');
             beep.play();
-          } else
+          } else {
             ref.current.classList.remove('ButtonFlash');
-
+          }
           count++;
           //console.log(count)
           
@@ -169,9 +168,15 @@ function Reactionary() {
 
     }
 
+    useEffect(() => {
+      if (counterMeter === MAX_COUNTER_METER) 
+        {setShowCounterButton(true)}
+      else {setShowCounterButton(false)}
+    }, [counterMeter,showCounterButton])
 
 
-    function ActionButtons() {
+
+    const ActionButtons = () => {
         return (
             <>
                 <button id='ActionButton' className='HighButton' ref={highRef} 
@@ -190,10 +195,12 @@ function Reactionary() {
         );
     } 
     
-    function TheCounterButton() {
+    const TheCounterButton = () => {
         return (
             <>
-            <button className='CounterButton' onClick={handleCounterAttack()} > COUNTER! </button>
+            <button className='CounterButton' 
+            onClick={handleCounterAttack}
+            > COUNTER! </button>
             </>
         );
     } 
@@ -244,7 +251,7 @@ function Reactionary() {
         </tr>
         <tr>
           <div className='Button Window'>
-            { counterMeter === MAX_COUNTER_METER ?
+            { (showCounterButton) ?
                 <TheCounterButton /> : <ActionButtons />
             }
 
