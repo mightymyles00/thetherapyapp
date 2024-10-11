@@ -1,8 +1,19 @@
 import './components(reactionary)/Reactionary.css';
 import {BrowserRouter, Routes, Route, createBrowserRouter} from 'react-router-dom'
 import { useState, useRef, useEffect } from 'react';
+
 import beepSound from './components(reactionary)/beep.wav'
 import hitSound from './components(reactionary)/hit.mp3'
+import hurtSound from './components(reactionary)/hurt.wav'
+import swingSound from './components(reactionary)/swing.wav'
+
+
+import counter from './components(reactionary)/images/counter.jpg'
+import high from './components(reactionary)/images/high.jpg'
+import low from './components(reactionary)/images/low.jpg'
+import mid from './components(reactionary)/images/mid.jpg'
+import netural from './components(reactionary)/images/netural.jpg'
+
 
 
 import Card from 'react-bootstrap/Card'
@@ -14,7 +25,27 @@ import Timer from './Timer.js';
 const dodgeWindow = 3000; // 3 secs
 const beep = new Audio(beepSound)
 const hit = new Audio(hitSound)
+const swing = new Audio(swingSound)
+const hurt = new Audio(hurtSound)
 
+
+const actionImages = [
+  {"state":"counter",
+    "src":counter
+  },
+  {"state": "high",
+    "src":high 
+  },
+  {"state":"low",
+    "src":low
+  },
+  {"state": "mid",
+    "src":mid
+  },
+  {"state": "netural",
+    "src": netural
+  }
+]
 
 
 
@@ -28,7 +59,8 @@ function Reactionary() {
     const highRef = useRef(null);
     const midRef = useRef(null);
     const lowRef = useRef(null);
-    const [input, setInput] = useState('h')
+    const [input, setInput] = useState('')
+    const [image, setImage] = useState(netural)
 
 
     const MAX_COUNTER_METER = 3
@@ -39,7 +71,7 @@ function Reactionary() {
     const [charDamage, setCharDamage] = useState (0)
 
 
-
+    
 
 
     const handleDodgeHigh = () => {
@@ -50,19 +82,29 @@ function Reactionary() {
         {
           console.log("block confirmed")
           setCounterMeter(counterMeter + 1);
+          ActionWindowPicture(mid)
+          swing.play()
         }
         else
         {
           setCharDamage(charDamage + 1)
           console.log("player hit")
+          ActionWindowPicture(mid)
+          hurt.play()
         }
         setInput('')
-
+        console.log(counterMeter)
 
     }
 
+    useEffect(() => {
+
+
+    }  ,[]);
+
     const handleHighBlock = () => {
       setInput("high")
+      //setImage(low)
 
     };
 
@@ -87,7 +129,7 @@ function Reactionary() {
             ref.current.classList.remove('ButtonFlash');
 
           count++;
-          console.log(count)
+          //console.log(count)
           
           // Stop blinking after 3 blinks (6 changes: visible -> hidden -> visible)
           if (count === totalBlinks * 2) {
@@ -109,7 +151,7 @@ function Reactionary() {
         }, blinkInterval);
       }
     
-    const handleClick =(e) => {
+    const handleClick = (e) => {
         blinkButton("HighButton")
         //hit.play()
         //setCounterMeter(counterMeter + 1)
@@ -122,27 +164,52 @@ function Reactionary() {
         hit.play()
         setBossHealth(bossHealth - 1)
         setCounterMeter(0)
+        ActionWindowPicture(counter)
+
 
     }
+
 
 
     function ActionButtons() {
         return (
             <>
-                <button id='ActionButton' className='HighButton' ref={highRef} onClick={handleHighBlock}> HIGH! </button>
-                <button id='ActionButton' className='MidButton' ref={midRef} onClick={handleDodgeHigh}> MID! </button>
-                <button id='ActionButton' className='LowButton' ref={lowRef}> LOW! </button>
+                <button id='ActionButton' className='HighButton' ref={highRef} 
+                onClick={handleHighBlock}
+                //onClick={setImage(high)}
+ 
+                > HIGH! </button>
+                <button id='ActionButton' className='MidButton' ref={midRef} 
+                onClick={handleDodgeHigh} 
+                //onClick={setImage(mid)}
+                > MID! </button>
+                <button id='ActionButton' className='LowButton' ref={lowRef} 
+                //onClick={setImage(netural)}
+                > LOW! </button>
             </>
         );
     } 
     
-    function THECounterButton() {
+    function TheCounterButton() {
         return (
             <>
-            <button className='CounterButton' onClick={handleCounterAttack}> COUNTER! </button>
+            <button className='CounterButton' onClick={handleCounterAttack()} > COUNTER! </button>
             </>
         );
     } 
+
+    function ActionWindowPicture(pic)
+    {
+      setImage(pic)
+      setTimeout(() => {
+        setImage(netural)
+      }, 1500);
+
+
+
+    }
+
+
 
 
 
@@ -163,6 +230,7 @@ function Reactionary() {
           </tr>
         <tr>
           <div className='ActionWindow'>
+            <img className='ActionImage' src={image} alt={image} />
 
             
           </div>
@@ -177,8 +245,7 @@ function Reactionary() {
         <tr>
           <div className='Button Window'>
             { counterMeter === MAX_COUNTER_METER ?
-                <THECounterButton />
-                : <ActionButtons />
+                <TheCounterButton /> : <ActionButtons />
             }
 
           </div>
