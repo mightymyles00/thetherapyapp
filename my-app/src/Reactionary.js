@@ -1,6 +1,8 @@
 import './components(reactionary)/Reactionary.css';
 import {BrowserRouter, Routes, Route, createBrowserRouter} from 'react-router-dom'
 import { useState, useRef, useEffect } from 'react';
+import Countdown from './components(reactionary)/Countdown.js';
+
 
 import beepSound from './components(reactionary)/beep.wav'
 import hitSound from './components(reactionary)/hit.mp3'
@@ -55,12 +57,27 @@ setInterval(function() {
     
 }, 2000);
 
-function Reactionary() {
+function Reactionary() {  
+    const initialTime = 3000;
+    const [startGame, setStartGame] = useState(false);
+
+    // Block window
+    const [timeLeft, setTimeLeft] = useState(initialTime);
+    const [isRunning, setIsRunning] = useState(false);
+    
+    const [attack, setAttack] = useState(0)
+    const BossAttacks = ["High", 'Mid', "Low"]
+    const Buttons = ["High", 'Mid', "Low"]
+
+
     const highRef = useRef(null);
     const midRef = useRef(null);
     const lowRef = useRef(null);
     const [input, setInput] = useState('');
     const [image, setImage] = useState(netural);
+
+
+    const [blockWindow, setBlockWindow] = useState('') 
 
 
     const MAX_COUNTER_METER = 3;
@@ -72,14 +89,88 @@ function Reactionary() {
     const [charDamage, setCharDamage] = useState(0);
 
 
-    
+    const StartTheGame = () => {
+      if(startGame === false)
+      {
+        console.log('start the game')
+        setStartGame(true)
+      }
+    } 
 
+    function getRandomInterval(min,max)
+    {
+      return Math.floor(min + Math.random() * max)
+    }
+    useEffect(() =>
+      {
+        if(startGame) {
+
+          setInterval(() => {
+            console.log("set attack")
+            prepareAttack(initialTime, BossAttacks[getRandomInterval(0,3)])
+          }, getRandomInterval(5000,10000))
+        }
+        
+      }, [startGame, BossAttacks]);
+    
+    const prepareAttack = (time,attack) => {
+      if (!isRunning) {
+        setTimeLeft(time)
+        setIsRunning(true);
+        blinkButton(attack)
+
+        whichAttack(attack)
+      }
+    }
+
+    useEffect(() => { 
+
+
+
+    })
+
+    const blockAttack = ({attack}) => {
+      let ref = null;
+
+      if(isRunning) { 
+        if (attack === "High") {ref = highRef}
+        if (attack === "Mid") {ref = midRef}
+        if (attack === "Low") {ref = lowRef}
+
+
+      }
+        
+    }
+
+    const whichAttack = (attackNum) => {
+      //if attackNum = 1
+
+    }
+
+    useEffect(() => {
+      let intervalId;
+    
+      if (isRunning && timeLeft > 0) {
+          intervalId = setInterval(() => {
+              setTimeLeft((prevTime) => prevTime - 1);
+          }, 0);
+      } else if (timeLeft === 0) {
+          console.log('stop running')
+          setIsRunning(false);
+      }
+  
+      return () => clearInterval(intervalId);
+
+
+
+
+    },  [isRunning, timeLeft]);
 
     const handleDodgeHigh = () => {
         //console.log("JUMP")
         if(counterMeter !== (MAX_COUNTER_METER - 1))
         {
-          blinkButton('HighButton')
+          ///blinkButton('HighButton')
         }
         if (input === "high")
         {
@@ -111,9 +202,9 @@ function Reactionary() {
     const blinkButton = (actionButton) => {
         let ref = null;
 
-        if (actionButton === "HighButton") {ref = highRef}
-        if (actionButton === "MidButton") {ref = midRef}
-        if (actionButton === "LowButton") {ref = lowRef}
+        if (actionButton === "High") {ref = highRef}
+        if (actionButton === "Mid") {ref = midRef}
+        if (actionButton === "Low") {ref = lowRef}
 
         let count = 0;
         let buttonClicked = false
@@ -149,16 +240,7 @@ function Reactionary() {
 
         }, blinkInterval);
       }
-    
-    const handleClick = (e) => {
-        blinkButton("HighButton")
-        //hit.play()
-        //setCounterMeter(counterMeter + 1)
-        //console.log(counterMeter)
-
-
-    }
-    
+        
     const handleCounterAttack = (e) => {
         hit.play()
         setBossHealth(bossHealth - 1)
@@ -179,16 +261,20 @@ function Reactionary() {
     const ActionButtons = () => {
         return (
             <>
-                <button id='ActionButton' className='HighButton' ref={highRef} 
-                onClick={handleHighBlock}
+                <button id='ActionButton' className='High' ref={highRef} 
+                onClick={(e) => {
+                  if(isRunning) 
+                    {setInput('high')} 
+                  else 
+                    {setInput('')} }}
                 //onClick={setImage(high)}
  
                 > HIGH! </button>
-                <button id='ActionButton' className='MidButton' ref={midRef} 
+                <button id='ActionButton' className='Mid' ref={midRef} 
                 onClick={handleDodgeHigh} 
                 //onClick={setImage(mid)}
                 > MID! </button>
-                <button id='ActionButton' className='LowButton' ref={lowRef} 
+                <button id='ActionButton' className='Low' ref={lowRef} 
                 //onClick={setImage(netural)}
                 > LOW! </button>
             </>
@@ -229,6 +315,8 @@ function Reactionary() {
 
         <table>
           <tr>
+            <div><button id='ActionButton' onClick={StartTheGame} disabled={startGame}> Start </button> </div>
+            {/* <Countdown initialTime={dodgeWindow}> </Countdown> */}
             <Card className='headerText'>
                 <Card.Body>
                     <p>Dont get hit twice.</p>
@@ -254,6 +342,7 @@ function Reactionary() {
             { (showCounterButton) ?
                 <TheCounterButton /> : <ActionButtons />
             }
+
 
           </div>
         </tr>
