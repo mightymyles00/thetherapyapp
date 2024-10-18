@@ -35,16 +35,16 @@ const actionImages = [
   {"state":"counter",
     "src":counter
   },
-  {"state": "High",
+  {"state": "high",
     "src":high 
   },
-  {"state":"Low",
+  {"state":"low",
     "src":low
   },
-  {"state": "Mid",
+  {"state": "mid",
     "src":mid
   },
-  {"state": "Netural",
+  {"state": "netural",
     "src": netural
   }
 ]
@@ -146,8 +146,8 @@ function Reactionary() {
 
     const actionButtonPressed = (e, attack) => {
       if(isRunning) {
-        swing.play()
         ActionWindowPicture(attack)
+        swing.play()
         setIsRunning(false)
         setInput(attack)
         console.log(attack)
@@ -164,7 +164,7 @@ function Reactionary() {
     useEffect(() => {
       let intervalId;
       
-    
+      
       if (isRunning && timeLeft > 0) {
         let ref = null;
 
@@ -200,8 +200,14 @@ function Reactionary() {
           {
             console.log("block confirmed")
           }
+          else if(attack ==! 'null')
+          {
+            console.log("player hit")
+            hurt.play()
+          }
           setIsRunning(false);
           setInput('')
+          setAttack('null')
       }
   
       return () => clearInterval(intervalId);
@@ -294,7 +300,9 @@ function Reactionary() {
 
     function ActionWindowPicture(pic)
     {
-      setImage(pic)
+      if(pic === "High") {setImage(high)}
+      else if (pic ==="Mid") {setImage(mid)}
+      else if (pic === "Low") {setImage(low)}
       setTimeout(() => {
         setImage(netural)
       }, 1500);
