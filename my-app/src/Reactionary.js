@@ -35,16 +35,16 @@ const actionImages = [
   {"state":"counter",
     "src":counter
   },
-  {"state": "high",
+  {"state": "High",
     "src":high 
   },
-  {"state":"low",
+  {"state":"Low",
     "src":low
   },
-  {"state": "mid",
+  {"state": "Mid",
     "src":mid
   },
-  {"state": "netural",
+  {"state": "Netural",
     "src": netural
   }
 ]
@@ -58,13 +58,14 @@ setInterval(function() {
 }, 2000);
 
 function Reactionary() {  
-    const initialTime = 300;
+    const initialTime = 600;
     const [startGame, setStartGame] = useState(false);
 
     // Block window
     const [timeLeft, setTimeLeft] = useState(initialTime);
     const [isRunning, setIsRunning] = useState(false);
     
+    const [input, setInput] = useState('');
     const [attack, setAttack] = useState('')
     const BossAttacks = ["High", 'Mid', "Low"]
     const Buttons = ["High", 'Mid', "Low"]
@@ -73,9 +74,8 @@ function Reactionary() {
     const highRef = useRef(null);
     const midRef = useRef(null);
     const lowRef = useRef(null);
-    const [input, setInput] = useState('');
     const [image, setImage] = useState(netural);
-
+    const [buttonPressed, setButtonPressed] = useState(false)
 
     const [blockWindow, setBlockWindow] = useState('') 
 
@@ -103,7 +103,7 @@ function Reactionary() {
     }
     useEffect(() =>
       {
-        if(startGame) {
+        if(startGame && !buttonPressed) {
 
           setInterval(() => {
             console.log("set attack")
@@ -111,7 +111,7 @@ function Reactionary() {
           }, 5000)
         }
         
-      }, [startGame]);
+      }, [startGame, buttonPressed]);
     
     const prepareAttack = (time,attack) => {
       if (!isRunning) {
@@ -120,8 +120,8 @@ function Reactionary() {
         setTimeLeft(time)
         setIsRunning(true);
         //blinkButton(attack)
-
-        whichAttack(attack)
+        console.log('BLOCK!')
+        //whichAttack(attack)
       }
     }
 
@@ -144,9 +144,21 @@ function Reactionary() {
         
     }
 
-    const whichAttack = (attackNum) => {
+    const actionButtonPressed = (e, attack) => {
+      if(isRunning) {
+        swing.play()
+        ActionWindowPicture(attack)
+        setIsRunning(false)
+        setInput(attack)
+        console.log(attack)
+        setButtonPressed(true)
+        setTimeLeft(0)
+      }
+      else {
+        console.log("not yet")
+      }
+      
       //if attackNum = 1
-
     }
 
     useEffect(() => {
@@ -159,9 +171,9 @@ function Reactionary() {
         if (attack === "High") {ref = highRef}
         if (attack === "Mid") {ref = midRef}
         if (attack === "Low") {ref = lowRef}
-          intervalId = setInterval(() => {
+        intervalId = setInterval(() => {
               setTimeLeft((prevTime) => prevTime - 1);
-              if(timeLeft % 2 === 0)
+              if(timeLeft % 5 === 0)
               {
                 ref.current.classList.add('ButtonFlash');
                 beep.play();
@@ -171,14 +183,25 @@ function Reactionary() {
                 ref.current.classList.remove('ButtonFlash');
               }
 
+              if(buttonPressed === true)
+              {
+                console.log('button pressed!')
+                setTimeLeft(0)
+                clearInterval()
+                setButtonPressed(false)
+                
+              }
+
           }, 0);
-      } else if (timeLeft === 0 || attack === input) {
+      }
+      if (timeLeft === 0 || attack === input) {
           console.log('stop running')
           if(attack === input)
           {
             console.log("block confirmed")
           }
           setIsRunning(false);
+          setInput('')
       }
   
       return () => clearInterval(intervalId);
@@ -186,7 +209,7 @@ function Reactionary() {
 
 
 
-    },  [isRunning, timeLeft]);
+    },  [isRunning, timeLeft, buttonPressed]);
 
     const handleDodgeHigh = () => {
         //console.log("JUMP")
@@ -219,49 +242,6 @@ function Reactionary() {
       //setImage(low)
 
     };
-
-
-    const blinkButton = (actionButton) => {
-        let ref = null;
-
-        if (actionButton === "High") {ref = highRef}
-        if (actionButton === "Mid") {ref = midRef}
-        if (actionButton === "Low") {ref = lowRef}
-
-        let count = 0;
-        let buttonClicked = false
-        const totalBlinks = 5;
-        const blinkInterval = 100;  // time in milliseconds (500ms = 0.5s)
-        
-        const interval = setInterval(() => {
-          if(count % 2 === 0) {
-            ref.current.classList.add('ButtonFlash');
-            beep.play();
-          } else {
-            ref.current.classList.remove('ButtonFlash');
-          }
-          count++;
-          //console.log(count)
-          
-          // Stop blinking after 3 blinks (6 changes: visible -> hidden -> visible)
-          if (count === totalBlinks * 2) {
-            clearInterval(interval);
-            ref.current.classList.remove('ButtonFlash'); // Ensure it's visible after blinking
-          }
-          /*if(input === "high")
-          {
-            hit.play()
-            console.log("hit confirmed")
-            clearInterval(interval);
-            buttonClicked = true
-            setInput('')
-          }*/
-
-          
-          //ref.current.classList.remove('ButtonFlash');
-
-        }, blinkInterval);
-      }
         
     const handleCounterAttack = (e) => {
         hit.play()
@@ -285,27 +265,18 @@ function Reactionary() {
             <>
                 <button id='ActionButton' className='High' ref={highRef} 
                 onClick={(e) => {
-                  if(isRunning) 
-                    {setInput('High')} 
-                  else 
-                    {setInput('')} }}
-                //onClick={setImage(high)}
- 
+                    actionButtonPressed(e, "High")
+                    }}
                 > HIGH! </button>
                 <button id='ActionButton' className='Mid' ref={midRef} 
                 onClick={(e) => {
-                  if(isRunning) 
-                    {setInput('Mid')} 
-                  else 
-                    {setInput('')} }}
-                //onClick={setImage(mid)}
+                    actionButtonPressed(e, "Mid")
+                    }}
                 > MID! </button>
                 <button id='ActionButton' className='Low' ref={lowRef} 
                 onClick={(e) => {
-                  if(isRunning) 
-                    {setInput('Low')} 
-                  else 
-                    {setInput('')} }}
+                    actionButtonPressed(e, "Low")
+                    }}
                 > LOW! </button>
             </>
         );
