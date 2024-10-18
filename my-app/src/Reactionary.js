@@ -58,14 +58,14 @@ setInterval(function() {
 }, 2000);
 
 function Reactionary() {  
-    const initialTime = 3000;
+    const initialTime = 300;
     const [startGame, setStartGame] = useState(false);
 
     // Block window
     const [timeLeft, setTimeLeft] = useState(initialTime);
     const [isRunning, setIsRunning] = useState(false);
     
-    const [attack, setAttack] = useState(0)
+    const [attack, setAttack] = useState('')
     const BossAttacks = ["High", 'Mid', "Low"]
     const Buttons = ["High", 'Mid', "Low"]
 
@@ -108,16 +108,18 @@ function Reactionary() {
           setInterval(() => {
             console.log("set attack")
             prepareAttack(initialTime, BossAttacks[getRandomInterval(0,3)])
-          }, getRandomInterval(5000,10000))
+          }, 5000)
         }
         
-      }, [startGame, BossAttacks]);
+      }, [startGame]);
     
     const prepareAttack = (time,attack) => {
       if (!isRunning) {
+        console.log(attack)
+        setAttack(attack)
         setTimeLeft(time)
         setIsRunning(true);
-        blinkButton(attack)
+        //blinkButton(attack)
 
         whichAttack(attack)
       }
@@ -149,13 +151,33 @@ function Reactionary() {
 
     useEffect(() => {
       let intervalId;
+      
     
       if (isRunning && timeLeft > 0) {
+        let ref = null;
+
+        if (attack === "High") {ref = highRef}
+        if (attack === "Mid") {ref = midRef}
+        if (attack === "Low") {ref = lowRef}
           intervalId = setInterval(() => {
               setTimeLeft((prevTime) => prevTime - 1);
+              if(timeLeft % 2 === 0)
+              {
+                ref.current.classList.add('ButtonFlash');
+                beep.play();
+              }
+              else
+              {
+                ref.current.classList.remove('ButtonFlash');
+              }
+
           }, 0);
-      } else if (timeLeft === 0) {
+      } else if (timeLeft === 0 || attack === input) {
           console.log('stop running')
+          if(attack === input)
+          {
+            console.log("block confirmed")
+          }
           setIsRunning(false);
       }
   
@@ -264,18 +286,26 @@ function Reactionary() {
                 <button id='ActionButton' className='High' ref={highRef} 
                 onClick={(e) => {
                   if(isRunning) 
-                    {setInput('high')} 
+                    {setInput('High')} 
                   else 
                     {setInput('')} }}
                 //onClick={setImage(high)}
  
                 > HIGH! </button>
                 <button id='ActionButton' className='Mid' ref={midRef} 
-                onClick={handleDodgeHigh} 
+                onClick={(e) => {
+                  if(isRunning) 
+                    {setInput('Mid')} 
+                  else 
+                    {setInput('')} }}
                 //onClick={setImage(mid)}
                 > MID! </button>
                 <button id='ActionButton' className='Low' ref={lowRef} 
-                //onClick={setImage(netural)}
+                onClick={(e) => {
+                  if(isRunning) 
+                    {setInput('Low')} 
+                  else 
+                    {setInput('')} }}
                 > LOW! </button>
             </>
         );
@@ -343,7 +373,7 @@ function Reactionary() {
                 <TheCounterButton /> : <ActionButtons />
             }
 
-
+            <div>{timeLeft}</div>
           </div>
         </tr>
         </table> 
