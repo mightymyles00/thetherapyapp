@@ -3,11 +3,18 @@
     width: 75%;
 }
 
-.ButtonFlash {
+.ButtonFlashA {
     background-color: black;
     color:white;
 
 }
+
+.ButtonFlashB {
+    background-color: green;
+    color:black;
+
+}
+
 
 
 .ActionWindow {

@@ -103,12 +103,12 @@ function Reactionary() {
     }
     useEffect(() =>
       {
-        if(startGame && !buttonPressed) {
+        if(startGame && !buttonPressed && !showCounterButton) {
 
           setInterval(() => {
             console.log("set attack")
             prepareAttack(initialTime, BossAttacks[getRandomInterval(0,3)])
-          }, 5000)
+          }, 7000)
         }
         
       }, [startGame, buttonPressed]);
@@ -120,7 +120,6 @@ function Reactionary() {
         setTimeLeft(time)
         setIsRunning(true);
         //blinkButton(attack)
-        console.log('BLOCK!')
         //whichAttack(attack)
       }
     }
@@ -152,7 +151,7 @@ function Reactionary() {
         setInput(attack)
         console.log(attack)
         setButtonPressed(true)
-        setTimeLeft(0)
+        //setTimeLeft(0)
       }
       else {
         console.log("not yet")
@@ -164,7 +163,7 @@ function Reactionary() {
     useEffect(() => {
       let intervalId;
       
-      
+      if (!showCounterButton && startGame) {
       if (isRunning && timeLeft > 0) {
         let ref = null;
 
@@ -175,30 +174,32 @@ function Reactionary() {
               setTimeLeft((prevTime) => prevTime - 1);
               if(timeLeft % 5 === 0)
               {
-                ref.current.classList.add('ButtonFlash');
+                ref.current.classList.remove('ButtonFlashB');
+                ref.current.classList.add('ButtonFlashA');
                 beep.play();
               }
               else
               {
-                ref.current.classList.remove('ButtonFlash');
+                ref.current.classList.remove('ButtonFlashA');
+                ref.current.classList.add('ButtonFlashB');
               }
 
               if(buttonPressed === true)
               {
                 console.log('button pressed!')
-                setTimeLeft(0)
                 clearInterval()
                 setButtonPressed(false)
                 
               }
 
-          }, 0);
+          }, 10);
       }
       if (timeLeft === 0 || attack === input) {
           console.log('stop running')
           if(attack === input)
           {
             console.log("block confirmed")
+            setCounterMeter((prevCounter) => prevCounter + 1)
           }
           else if(attack ==! 'null')
           {
@@ -212,48 +213,18 @@ function Reactionary() {
   
       return () => clearInterval(intervalId);
 
-
+    }
 
 
     },  [isRunning, timeLeft, buttonPressed]);
 
-    const handleDodgeHigh = () => {
-        //console.log("JUMP")
-        if(counterMeter !== (MAX_COUNTER_METER - 1))
-        {
-          ///blinkButton('HighButton')
-        }
-        if (input === "high")
-        {
-          console.log("block confirmed")
-          setCounterMeter(counterMeter + 1);
-          ActionWindowPicture(mid)
-          swing.play()
-        }
-        else
-        {
-          setCharDamage(charDamage + 1)
-          console.log("player hit")
-          ActionWindowPicture(mid)
-          hurt.play()
-        }
-        setInput('')
-        console.log(counterMeter)
 
-    }
-
-
-    const handleHighBlock = () => {
-      setInput("high")
-      //setImage(low)
-
-    };
         
     const handleCounterAttack = (e) => {
         hit.play()
         setBossHealth(bossHealth - 1)
         setCounterMeter(0)
-        ActionWindowPicture(counter)
+        ActionWindowPicture("Counter")
 
 
     }
@@ -303,6 +274,7 @@ function Reactionary() {
       if(pic === "High") {setImage(high)}
       else if (pic ==="Mid") {setImage(mid)}
       else if (pic === "Low") {setImage(low)}
+      else if (pic === "Counter") {setImage(counter)}
       setTimeout(() => {
         setImage(netural)
       }, 1500);
