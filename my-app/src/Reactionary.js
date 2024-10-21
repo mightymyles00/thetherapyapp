@@ -15,6 +15,7 @@ import high from './components(reactionary)/images/high.jpg'
 import low from './components(reactionary)/images/low.jpg'
 import mid from './components(reactionary)/images/mid.jpg'
 import netural from './components(reactionary)/images/netural.jpg'
+import damaged from './components(reactionary)/images/hurt.jpg'
 
 
 
@@ -145,8 +146,7 @@ function Reactionary() {
 
     const actionButtonPressed = (e, attack) => {
       if(isRunning) {
-        ActionWindowPicture(attack)
-        swing.play()
+        //ActionWindowPicture(attack)
         setIsRunning(false)
         setInput(attack)
         console.log(attack)
@@ -184,27 +184,35 @@ function Reactionary() {
                 ref.current.classList.add('ButtonFlashB');
               }
 
-              if(buttonPressed === true)
+              /*if(buttonPressed === true)
               {
                 console.log('button pressed!')
                 clearInterval()
                 setButtonPressed(false)
                 
-              }
+              }*/
 
-          }, 10);
+          }, 0);
       }
-      if (timeLeft === 0 || attack === input) {
+      if (timeLeft === 0 || !(input === '')) {
           console.log('stop running')
           if(attack === input)
           {
+
             console.log("block confirmed")
+            swing.play()
             setCounterMeter((prevCounter) => prevCounter + 1)
+            ActionWindowPicture(attack)
+
           }
-          else if(attack ==! 'null')
+          else if(!(attack === 'null'))
           {
             console.log("player hit")
             hurt.play()
+            ActionWindowPicture("Damaged")
+
+            setCharDamage((prevDamage) => prevDamage + 1)
+            
           }
           setIsRunning(false);
           setInput('')
@@ -275,6 +283,11 @@ function Reactionary() {
       else if (pic ==="Mid") {setImage(mid)}
       else if (pic === "Low") {setImage(low)}
       else if (pic === "Counter") {setImage(counter)}
+      else if (pic === "Damaged") {
+        setImage(damaged)
+
+        }
+
       setTimeout(() => {
         setImage(netural)
       }, 1500);
@@ -303,6 +316,9 @@ function Reactionary() {
                     <p>Dont get hit twice.</p>
                 </Card.Body>
             </Card>
+            <div>Character Damage: {charDamage}</div>
+            <div>Boss Health: {bossHealth}</div>
+
           </tr>
         <tr>
           <div className='ActionWindow'>
