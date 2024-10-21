@@ -67,12 +67,6 @@ const Puzzle = () => {
         setSolved(JSON.stringify(positions) === JSON.stringify(correct))
         console.log(positions)
         console.log(solved)
-        if (solved && started)
-        {
-            alert("Puzzle finished");
-        }
-
-    
     }
 
 
@@ -95,8 +89,15 @@ const Puzzle = () => {
         {
             isSolved()
         }
-
     }, [positions]);
+
+    // Checks if puzzle is solved
+    useEffect(() => {
+        if (solved && started)
+        {
+            alert("Puzzle finished");
+        }
+    }, [solved, started])
 
 
     return (
