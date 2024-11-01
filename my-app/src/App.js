@@ -59,7 +59,7 @@ function App() {
           <table>
             <tr aria-rowspan={2}>
               <td colSpan={2}>
-                <button style={{width: "100%", alignContent: "center"}}> <img src={startButton} alt='start'/> </button>
+                <button style={{width: "90%", height: "90%", alignContent: "center"}}> <img src={startButton} alt='start' width='90%'/> </button>
               </td>
             </tr>
             <tr>

@@ -107,7 +107,7 @@ const Puzzle = () => {
         <tr>
             <Card className='headerText'>
                 <Card.Body>
-                    <p>Finish this puzzle under 100 seconds</p>
+                    <p>Complete this puzzle</p>
                 </Card.Body>
             </Card>
         </tr>

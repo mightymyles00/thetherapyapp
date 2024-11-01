@@ -3,10 +3,20 @@ import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import SimonButton from './components(simon)/SimonButton.js'
 import { useState, useRef, useEffect } from 'react';
-import beepSound from './components(simon)/beep.wav'
+import beepSound1 from './components(simon)/SimonBeep1.wav'
+import beepSound2 from './components(simon)/SimonBeep2.wav'
+import beepSound3 from './components(simon)/SimonBeep3.wav'
+import beepSound4 from './components(simon)/SimonBeep4.wav'
+import Fail from './components(simon)/hurt.wav'
 
 
 const colors = ["green", "red", "yellow", "blue"]
+const beep1 = new Audio(beepSound1)
+const beep2 = new Audio(beepSound2)
+const beep3 = new Audio(beepSound3)
+const beep4 = new Audio(beepSound4)
+const failure = new Audio(Fail)
+
 
 function Simon() {
   const [sequence, setSequence] = useState([]);
@@ -22,6 +32,7 @@ function Simon() {
 
   //function 
   const resetGame = () => {
+    failure.play()
     setSequence([])
     setPlaying(false)
     setPlayingIdx(0)
@@ -72,13 +83,21 @@ function Simon() {
       }
       else // INCORRECT
       {
-        
         resetGame()
         alert("You Lost!");
+
       }       
     }
 
   }
+
+  const playSound = (sequenceColor) => {
+    if(sequenceColor === "blue") {beep1.play()}
+    else if (sequenceColor === "yellow") {beep2.play()}
+    else if (sequenceColor === "red") {beep3.play()}
+    else if (sequenceColor === "green") {beep4.play()}
+
+  } 
 
   // excutes if the sequence changes
   useEffect(() => {
@@ -94,11 +113,13 @@ function Simon() {
         // highlight the ref
         
         console.log(sequence[idx])
+        playSound(sequence[idx])
         setTimeout(() => {
           var xref = document.getElementById(sequence[idx])
           //xref.current.classList.add("bright-buttons")
           //console.log(ref) 
           //xref.style.backgroundColor = "white"
+          
           ref.current.classList.add("bright-buttons");
 
           setTimeout(() => {

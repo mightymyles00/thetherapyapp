@@ -386,7 +386,7 @@ function Reactionary() {
             {/* <Countdown initialTime={dodgeWindow}> </Countdown> */}
             <Card className='headerText'>
                 <Card.Body>
-                    <p>Dont get hit twice.</p>
+                    <p>Defeat the boss.</p>
                 </Card.Body>
             </Card>
             Boss Health
@@ -422,6 +422,7 @@ function Reactionary() {
             <div>Player Damage: {charDamage}</div>
             <div>Time Left: {timeLeft}</div>
 
+            {/*<div> <button id='ActionButton' visiblity> Next </button> </div>*/}
 
           </div>
         </tr>
