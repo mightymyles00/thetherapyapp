@@ -25,13 +25,12 @@
   background-color: yellow;
   border: none;
   text-align: center;
-  padding-left: 10%;
   padding: '25% 40px 80px 20px';
 }
 .ActivityButton img {
-  border: 2px solid;
   height: 150px;
   width: 150px;
+  border: none;
 }
 
 

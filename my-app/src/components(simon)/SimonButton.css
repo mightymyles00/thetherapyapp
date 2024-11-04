@@ -1,4 +1,4 @@
-button {
+.SimonButton {
     width: 200px;
     height: 200px;
     border: 5%;
@@ -8,6 +8,7 @@ button {
 .bright-buttons {
     color: white;
     background-color: white;
-    transform: scale(1.2);
+    transform: scale(1);
+    
     
 }

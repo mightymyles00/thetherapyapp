@@ -62,6 +62,7 @@ function Simon() {
       })
 
       const clickColor = e.target.getAttribute("color");
+      playSound(clickColor)
 
       // click the correct color of the sequence
       if(sequence[playingIdx] === clickColor) // CORRECT 
@@ -83,6 +84,7 @@ function Simon() {
       }
       else // INCORRECT
       {
+        failure.play()
         resetGame()
         alert("You Lost!");
 
@@ -163,18 +165,18 @@ function Simon() {
         <table>
           <tr>
             <td>
-              <SimonButton color="green" bg="green" border="200px 0px 0px 0px" onClick={handleColorClick} ref={greenRef}/>
+              <SimonButton className='SimonButton' color="green" bg="green" border="200px 0px 0px 0px" onClick={handleColorClick} ref={greenRef}/>
             </td>
             <td>
-              <SimonButton color="red" bg="red" border="0px 200px 0px 0px" onClick={handleColorClick} ref={redRef}/> 
+              <SimonButton className='SimonButton' color="red" bg="red" border="0px 200px 0px 0px" onClick={handleColorClick} ref={redRef}/> 
             </td>
           </tr>
           <tr>
             <td>
-              <SimonButton color="yellow" bg="yellow" border="0px 0px 0px 200px" onClick={handleColorClick} ref={yellowRef}/>
+              <SimonButton className='SimonButton' color="yellow" bg="yellow" border="0px 0px 0px 200px" onClick={handleColorClick} ref={yellowRef}/>
             </td>
             <td>
-              <SimonButton color="blue" bg="blue" border="00px 0px 200px 0px" onClick={handleColorClick} ref={blueRef}/>
+              <SimonButton className='SimonButton' color="blue" bg="blue" border="00px 0px 200px 0px" onClick={handleColorClick} ref={blueRef}/>
             </td>
           </tr>
           </table>

@@ -8,6 +8,7 @@ import React, { forwardRef } from 'react'
 
 const GameBtn = forwardRef(( { color, border, bg, onClick}, ref) => (   
     <button 
+        className='SimonButton'
         color={color}
         style={{background: bg, borderRadius: border}} 
         onClick={onClick}

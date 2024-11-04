@@ -11,6 +11,12 @@ import Pic6 from './components(matching)/CardImages/6.png'
 import SingleCard from './components(matching)/SingleCard'
 import Timer from './Timer.js'
 
+import miss from './components(matching)/miss.wav'
+import match from './components(matching)/match.wav'
+import success from './components(matching)/success.wav'
+import turnover from './components(matching)/switch.wav'
+
+
 const cardImages = [
   {"src": Pic1,
     "card": "./components(matching)/CardImages/1.png",
@@ -45,6 +51,10 @@ const cardImages = [
 
 ]
 
+const missSound = new Audio(miss)
+const switchSound = new Audio(turnover)
+const matchSound = new Audio(match)
+const successSound = new Audio(success)
 
 
 function Match() {
@@ -91,7 +101,9 @@ function Match() {
         setCards(prevCards => {
           return prevCards.map(card => {
             if(card.src === choiceOne.src) {
+              matchSound.play()
               return {...card, matched: true}
+              
 
             } else {
               return card
@@ -103,7 +115,8 @@ function Match() {
         })
         resetTurn()
       } else {
-        setTimeout(() => resetTurn(), 1000)
+        setTimeout(() => {resetTurn()  
+          missSound.play()}, 1000)
       }      
     }
     checkMatched()
@@ -122,16 +135,24 @@ function Match() {
 
   function checkMatched() {
     if (matchedCards === 6) {
+      successSound.play()
       alert("You Did It!");
       setRunning(false)
     }
   }
 
+  const handleStart = () => {
+    setRunning(true)
+  }
+
 
   //start game automatically & when you hit start
   useEffect(() => {
-    shuffleCards() 
-  }, [])
+    if (running) {
+      shuffleCards()
+      console.log('starting') 
+    }
+  }, [running])
 
 
   return (
@@ -146,7 +167,7 @@ function Match() {
                 </Card.Body>
             </Card>
           </tr>
-          <button style={{height: "40px", alignContent: 'center'}} onClick={shuffleCards} disabled={false}> Start </button>
+          <button style={{height: "40px", width: "200px", alignContent: 'center'}} onClick={handleStart} disabled={running}> Start </button>
 
           <div className='card-grid'>
           {cards.map(card => (
