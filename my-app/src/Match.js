@@ -136,8 +136,9 @@ function Match() {
   function checkMatched() {
     if (matchedCards === 6) {
       successSound.play()
-      alert("You Did It!");
-      setRunning(false)
+      setTimeout(() => {alert("You Did It!")
+        setRunning(false)
+      }, 100)
     }
   }
 
