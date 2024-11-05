@@ -1,7 +1,5 @@
 import './components(reactionary)/Reactionary.css';
-import {BrowserRouter, Routes, Route, createBrowserRouter} from 'react-router-dom'
 import { useState, useRef, useEffect } from 'react';
-import Countdown from './components(reactionary)/Countdown.js';
 
 
 import beepSound from './components(reactionary)/beep.wav'
@@ -17,39 +15,13 @@ import mid from './components(reactionary)/images/mid.jpg'
 import netural from './components(reactionary)/images/netural.jpg'
 import damaged from './components(reactionary)/images/hurt.jpg'
 
-
-
 import Card from 'react-bootstrap/Card'
-//import CardBody from 'react-bootstrap/CardBody'
-//import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
-import Timer from './Timer.js';
 
-const dodgeWindow = 3000; // 3 secs
 const beep = new Audio(beepSound)
 const hit = new Audio(hitSound)
 const swing = new Audio(swingSound)
 const hurt = new Audio(hurtSound)
-
-
-const actionImages = [
-  {"state":"counter",
-    "src":counter
-  },
-  {"state": "high",
-    "src":high 
-  },
-  {"state":"low",
-    "src":low
-  },
-  {"state": "mid",
-    "src":mid
-  },
-  {"state": "netural",
-    "src": netural
-  }
-]
-
 
 
 

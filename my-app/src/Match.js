@@ -9,7 +9,6 @@ import Pic4 from './components(matching)/CardImages/4.png'
 import Pic5 from './components(matching)/CardImages/5.png'
 import Pic6 from './components(matching)/CardImages/6.png'
 import SingleCard from './components(matching)/SingleCard'
-import Timer from './Timer.js'
 
 import miss from './components(matching)/miss.wav'
 import match from './components(matching)/match.wav'

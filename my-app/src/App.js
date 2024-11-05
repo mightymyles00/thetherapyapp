@@ -1,38 +1,17 @@
 import './App.css';
-import welcomeImage from './welcome.png';
-import startButton from './start.png';
-import activitiesButton from './activities.png';
-import statsButton from './stats.png'
-import petButton from './pet.png'
-import {BrowserRouter, Routes, Route, createBrowserRouter} from 'react-router-dom'
-import ActivitesPage from './Activities.js';
-
-
+import welcomeImage from './components(homepage)/welcome.png';
+import startButton from './components(homepage)/start.png';
+import activitiesButton from './components(homepage)/activities.png';
+import statsButton from './components(homepage)/stats.png'
+import petButton from './components(homepage)/pet.png'
 
 
 import Card from 'react-bootstrap/Card'
-//import CardBody from 'react-bootstrap/CardBody'
-//import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
-import Timer from './Timer.js';
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />
-  },
-  {
-    path: "activities",
-    element: <ActivitesPage />
-  }
-])
-
 
 function App() {
   return (
-
     <>
-
     <Container className='container'>
       <table>
         <tr>
@@ -83,7 +62,6 @@ function App() {
         </Card>
         </tr>
       </table>
-
       </Container>
 
   </>
