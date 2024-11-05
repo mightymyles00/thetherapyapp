@@ -56,23 +56,25 @@ function App() {
       <br></br>
       <tr>
         <Card className='WelcomeMessage'>
-          <table>
+          <table align={'center'}>
             <tr aria-rowspan={2}>
               <td colSpan={2}>
                 <button style={{width: "90%", height: "50%", alignContent: "center", backgroundColor: 'lightgreen'}}> <center> <img src={startButton} alt='start' width='90%' style={{border: 'none'}}/></center> </button>
               </td>
             </tr>
-            <tr>
+            </table>
+            <p></p>
+            <table align={'center'}>
+              <tr>
 
-              <td width={'50%'}>
+              <td width={'55%'} align='right'>
                 <a href='/activities'>
-                <button style={{backgroundColor: 'yellow'}}> <img src={activitiesButton} alt='activities' height={175} style={{border: 'none'}}/> </button>
+                <button style={{backgroundColor: 'yellow', alignContent: 'right', width: '90%', textAlign: 'center'}}> <center> <img src={activitiesButton} alt='activities' height={220} style={{border: 'none'}}/> </center> </button>
                 </a>
               </td>
-              <tr>
-                <button style={{backgroundColor: 'yellow'}}> <img src={statsButton} alt='stats' height={100} style={{border: 'none'}}/> </button>
-
-                <button style={{backgroundColor: 'yellow'}}> <img src={petButton} alt='stats' height={75} style={{border: 'none'}}/> </button>
+              <tr align='left'>
+                <button style={{backgroundColor: 'yellow', width: '85%', height: '80%'}}> <center> <img src={statsButton} alt='stats' height={120} style={{border: 'none'}}/> </center> </button>
+                <button style={{backgroundColor: 'yellow', width: '85%'}}> <img src={petButton} alt='stats' height={85} style={{border: 'none'}}/> </button>
               </tr>
 
             </tr>
