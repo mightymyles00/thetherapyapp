@@ -5,8 +5,10 @@ import React, { useEffect, useState} from 'react'
 import ReferenceImage from './components(puzzle)/image.png'
 import './components(puzzle)/Puzzle.css'
 
-import success from './components(matching)/success.wav'
- 
+import success from './components(puzzle)/success.wav'
+import piece from './components(puzzle)/piece.wav'
+import start from './components(puzzle)/start.wav'
+
 
 
 
@@ -16,7 +18,8 @@ import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 
 const successSound = new Audio(success)
-
+const pieceSound = new Audio(piece)
+const startSound = new Audio(start)
 
 const Puzzle = () => {
     const [positions, setPositions] = useState([...Array(16).keys()]);
@@ -33,6 +36,7 @@ const Puzzle = () => {
 
     const handleDrop = (e, position) => {
         e.preventDefault();
+        pieceSound.play()
         const originalPosition = e.dataTransfer.getData('text');
         console.log(originalPosition)
         setPositions((prevPositions) => {
@@ -58,6 +62,7 @@ const Puzzle = () => {
     const handleStart = (e) => {
         e.preventDefault();
         if(started === false) {
+            startSound.play()
             setStarted(true)
 
     }
@@ -99,7 +104,7 @@ const Puzzle = () => {
         if (solved && started)
         {
             successSound.play()
-            alert("Puzzle finished");
+            setTimeout(() => alert("Puzzle finished"), 200)
         }
     }, [solved, started])
 
@@ -117,7 +122,7 @@ const Puzzle = () => {
         </tr>
         <tr>
     <table>
-        <button style={{height: "40px", width: "200px", alignContent: 'center'}} onClick={handleStart}> "Start" </button>
+        <button style={{height: "40px", width: "200px", alignContent: 'center'}} disabled={started} onClick={handleStart}> Start </button>
     </table>
       </tr>
       <br></br>
