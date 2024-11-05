@@ -5,6 +5,8 @@ import React, { useEffect, useState} from 'react'
 import ReferenceImage from './components(puzzle)/image.png'
 import './components(puzzle)/Puzzle.css'
 
+import success from './components(matching)/success.wav'
+ 
 
 
 
@@ -13,6 +15,7 @@ import Card from 'react-bootstrap/Card'
 //import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 
+const successSound = new Audio(success)
 
 
 const Puzzle = () => {
@@ -95,6 +98,7 @@ const Puzzle = () => {
     useEffect(() => {
         if (solved && started)
         {
+            successSound.play()
             alert("Puzzle finished");
         }
     }, [solved, started])
@@ -113,7 +117,7 @@ const Puzzle = () => {
         </tr>
         <tr>
     <table>
-        <button style={{height: "40px", alignContent: 'center'}} onClick={handleStart}> "Start" </button>
+        <button style={{height: "40px", width: "200px", alignContent: 'center'}} onClick={handleStart}> "Start" </button>
     </table>
       </tr>
       <br></br>

@@ -66,6 +66,7 @@ function Match() {
   const [timer, setTimer] = useState(0)
   const [running, setRunning] = useState(false)
   const [matchedCards, setMatchedCards] = useState(0)
+  const [completed, setCompleted] = useState(false)
 
   //shuffle cards
   const shuffleCards = () => {
@@ -122,8 +123,18 @@ function Match() {
     checkMatched()
   }, [choiceOne, choiceTwo, matchedCards])
 
-  //console.log(cards)
+  //TIMER
+  useEffect(() => {
+    if(!completed) {
+    if(running) {
+        setInterval(() => {
+            setTimer(prev => prev + 1)
+        }, 1000)
+    } else
+    return () => clearInterval(timer)
+    }
 
+  }, [running])
 
   // reset choices & increase turn
   const resetTurn = () => {
@@ -136,7 +147,9 @@ function Match() {
   function checkMatched() {
     if (matchedCards === 6) {
       successSound.play()
-      setTimeout(() => {alert("You Did It!")
+      setCompleted(true)
+      setRunning(false)
+      setTimeout(() => {alert("You Did It! " + "\n Finished in " +timer+ " seconds!")
         setRunning(false)
       }, 100)
     }
@@ -151,7 +164,8 @@ function Match() {
   useEffect(() => {
     if (running) {
       shuffleCards()
-      console.log('starting') 
+      console.log('starting')
+      console.log(running) 
     }
   }, [running])
 
@@ -182,6 +196,7 @@ function Match() {
           ))}
           </div>
           <p> Turns: {turns}</p>
+          <p> Time: {timer}</p>
         </table> 
         
         

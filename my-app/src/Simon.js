@@ -8,6 +8,7 @@ import beepSound2 from './components(simon)/SimonBeep2.wav'
 import beepSound3 from './components(simon)/SimonBeep3.wav'
 import beepSound4 from './components(simon)/SimonBeep4.wav'
 import Fail from './components(simon)/hurt.wav'
+import win from './components(simon)/success.wav'
 
 
 const colors = ["green", "red", "yellow", "blue"]
@@ -16,12 +17,13 @@ const beep2 = new Audio(beepSound2)
 const beep3 = new Audio(beepSound3)
 const beep4 = new Audio(beepSound4)
 const failure = new Audio(Fail)
-
+const success = new Audio(win)
 
 function Simon() {
   const [sequence, setSequence] = useState([]);
   const [playing, setPlaying] = useState(false);
   const [playingIdx, setPlayingIdx] = useState(0);
+  const [score, setScore] = useState(0)
 
   //reference buttons
   const greenRef = useRef(null);
@@ -32,7 +34,6 @@ function Simon() {
 
   //function 
   const resetGame = () => {
-    failure.play()
     setSequence([])
     setPlaying(false)
     setPlayingIdx(0)
@@ -47,6 +48,8 @@ function Simon() {
 
   const handleNextLevel = () => {
     if(!playing) {
+      setScore(0)
+      setSequence([])
       setPlaying(true);
       addNewColor();
     }
@@ -71,6 +74,7 @@ function Simon() {
           setTimeout(() => {
             setPlayingIdx(0);
             addNewColor();
+            setScore(prevScore => prevScore + 1)
           }, 250);
 
 
@@ -84,9 +88,15 @@ function Simon() {
       }
       else // INCORRECT
       {
-        failure.play()
         resetGame()
-        alert("You Lost!");
+        if(score > 4) {
+          success.play()
+          setTimeout(() => alert("You Did It"), 100);
+        }
+        else {
+          failure.play()
+          setTimeout(() => alert("You Lost"), 100);
+        }
 
       }       
     }
@@ -104,6 +114,7 @@ function Simon() {
   // excutes if the sequence changes
   useEffect(() => {
     // show sequence
+    setTimeout(() => {
     if (sequence.length > 0) {
       const showSequence = (idx = 0) => {
         let ref = null;
@@ -127,13 +138,14 @@ function Simon() {
           setTimeout(() => {
             //xref.current.classList.remove("bright-buttons")
             ref.current.classList.remove("bright-buttons");
-            if (idx < sequence.length -1) showSequence(idx + 1);
+            if (idx < sequence.length -1) 
+              {showSequence(idx + 1)};
           }, 250);
         }, 250);
       };
 
       showSequence()
-    }
+    }}, 1000)
   }, [sequence])
 
   
@@ -154,15 +166,21 @@ function Simon() {
         <tr>
           <table>
 
-      <button style={{height: "40px", alignContent: 'center'}} onClick={handleNextLevel}> {sequence.length === 0 ? "Start" : sequence.length} </button>
+      <button style={{height: "40px", width: "200px", alignContent: 'center'}} onClick={handleNextLevel} disabled={playing}> Start </button>
+
       </table>
+
       </tr>
       <br></br>
 
       {/* Main container */}
+      <center style={{alignContent: 'center'}}> Pts: {score} </center>
+
       <Card className='SimonContainer' >
+        
       <tr>
         <table>
+          
           <tr>
             <td>
               <SimonButton className='SimonButton' color="green" bg="green" border="200px 0px 0px 0px" onClick={handleColorClick} ref={greenRef}/>

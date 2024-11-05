@@ -26,10 +26,10 @@ const Timer = ({running}) => {
 
 
     }, [running])
-        return (
-        <div id="timer">
-            {(time)}
-        </div>
+    return (
+    <div id="timer">
+        {(time)}
+    </div>
     );
 };
  

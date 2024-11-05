@@ -16,6 +16,7 @@ import {
 
 const router = createBrowserRouter([
   {
+    //Home Page
     path: "/",
     element: <App />,
   },
@@ -39,7 +40,6 @@ const router = createBrowserRouter([
       path: "reactionary",
       element: <ReactPage />
   },
-
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
