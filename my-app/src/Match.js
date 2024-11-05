@@ -123,18 +123,17 @@ function Match() {
     checkMatched()
   }, [choiceOne, choiceTwo, matchedCards])
 
-  //TIMER
-  useEffect(() => {
-    if(!completed) {
-    if(running) {
-        setInterval(() => {
+      //TIMER
+      useEffect(() => {
+        if(!running) return 
+
+        const interval = setInterval(() => {
             setTimer(prev => prev + 1)
         }, 1000)
-    } else
-    return () => clearInterval(timer)
-    }
+        return () => clearInterval(interval)
 
-  }, [running])
+
+    }, [running])
 
   // reset choices & increase turn
   const resetTurn = () => {

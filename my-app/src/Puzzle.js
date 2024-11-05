@@ -26,6 +26,9 @@ const Puzzle = () => {
     const [solved, setSolved] = useState(false);
     const [correct, setCorrect] = useState([...Array(16).keys()])
     const [started, setStarted] = useState(false);
+    const [timer, setTimer] = useState(0)
+    const [running, setRunning] = useState(false)
+  
     const [firstPass, setFirstPass] = useState(false)
 
     // Handling the start of a drag event
@@ -62,6 +65,7 @@ const Puzzle = () => {
     const handleStart = (e) => {
         e.preventDefault();
         if(started === false) {
+            setRunning(true)
             startSound.play()
             setStarted(true)
 
@@ -104,9 +108,24 @@ const Puzzle = () => {
         if (solved && started)
         {
             successSound.play()
-            setTimeout(() => alert("Puzzle finished"), 200)
+            setRunning(false)
+            setStarted(false)
+            setTimeout(() => alert("You Did It! \nFinished in " + timer + " seconds."), 200)
         }
     }, [solved, started])
+
+      //TIMER
+    useEffect(() => {
+        if(!running) return 
+
+        const interval = setInterval(() => {
+            setTimer(prev => prev + 1)
+        }, 1000)
+        return () => clearInterval(interval)
+
+
+    }, [running])
+
 
 
     return (
@@ -124,11 +143,14 @@ const Puzzle = () => {
     <table>
         <button style={{height: "40px", width: "200px", alignContent: 'center'}} disabled={started} onClick={handleStart}> Start </button>
     </table>
+    
       </tr>
       <br></br>
     
     <tr>
-        {/* Main container */}
+    {/* Main container */}
+    <p><center style={{alignContent: 'center'}}> Time: {timer} </center></p>
+
     <Card className="PuzzleBoard">
         <div className='reference-image'>
             <img src={ReferenceImage} alt="ReferenceImage" />    
