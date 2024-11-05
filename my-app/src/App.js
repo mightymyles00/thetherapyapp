@@ -59,20 +59,20 @@ function App() {
           <table>
             <tr aria-rowspan={2}>
               <td colSpan={2}>
-                <button style={{width: "90%", height: "90%", alignContent: "center"}}> <img src={startButton} alt='start' width='90%'/> </button>
+                <button style={{width: "90%", height: "50%", alignContent: "center", backgroundColor: 'lightgreen'}}> <center> <img src={startButton} alt='start' width='90%' style={{border: 'none'}}/></center> </button>
               </td>
             </tr>
             <tr>
 
               <td width={'50%'}>
                 <a href='/activities'>
-                <button> <img src={activitiesButton} alt='activities' height={175}/> </button>
+                <button style={{backgroundColor: 'yellow'}}> <img src={activitiesButton} alt='activities' height={175} style={{border: 'none'}}/> </button>
                 </a>
               </td>
               <tr>
-                <button> <img src={statsButton} alt='stats' height={100}/> </button>
+                <button style={{backgroundColor: 'yellow'}}> <img src={statsButton} alt='stats' height={100} style={{border: 'none'}}/> </button>
 
-                <button> <img src={petButton} alt='stats' height={75}/> </button>
+                <button style={{backgroundColor: 'yellow'}}> <img src={petButton} alt='stats' height={75} style={{border: 'none'}}/> </button>
               </tr>
 
             </tr>

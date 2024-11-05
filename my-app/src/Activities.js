@@ -57,24 +57,24 @@ function Activites() {
             <tr>
               <td>
                 <a href='/simon'> 
-                <button className='ActivityButton'> <img src={SimonButton} alt='simon' height='100%'/> </button>
+                <button className='ActivityButton'> <img src={SimonButton} alt='simon' height='100%' style={{border: 'none'}}/> </button>
                 </a>
               </td>
               <td>
                 <a href='/matching'>
-                <button className='ActivityButton'> <img src={MatchButton} alt='match' height='110'/> </button>
+                <button className='ActivityButton'> <img src={MatchButton} alt='match' height='110' style={{border: 'none'}}/> </button>
                 </a>
               </td>
             </tr>
             <tr>
               <td>
                 <a href='/puzzle'>
-                <button className='ActivityButton'> <img src={PuzzleButton} alt='puzzle' height='110'/> </button>
+                <button className='ActivityButton'> <img src={PuzzleButton} alt='puzzle' height='110'style={{border: 'none'}}/> </button>
                 </a>
               </td>
               <td>
               <a href='/reactionary'>
-              <button className='ActivityButton'> <img src={ReactButton} alt='react' height='110'/> </button>
+              <button className='ActivityButton'> <img src={ReactButton} alt='react' height='110' style={{border: 'none'}}/> </button>
                 </a>
 
               </td>
