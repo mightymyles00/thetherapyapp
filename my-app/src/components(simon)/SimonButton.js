@@ -6,7 +6,7 @@ import React, { forwardRef } from 'react'
 
 
 
-const GameBtn = forwardRef(( { color, border, bg, onClick}, ref) => (   
+const SimonButton = forwardRef(( { color, border, bg, onClick}, ref) => (   
     <button 
         className='SimonButton'
         color={color}
@@ -16,5 +16,4 @@ const GameBtn = forwardRef(( { color, border, bg, onClick}, ref) => (
     /> 
     ));
 
-
-export default GameBtn;
+export default SimonButton;

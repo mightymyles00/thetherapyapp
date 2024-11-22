@@ -1,7 +1,5 @@
 import './App.css';
-import {BrowserRouter, Routes, Route, createBrowserRouter} from 'react-router-dom'
-import ActivitesPage from './Activities.js';
-import React, { useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import ReferenceImage from './components(puzzle)/image.png'
 import './components(puzzle)/Puzzle.css'
 
@@ -10,11 +8,7 @@ import piece from './components(puzzle)/piece.wav'
 import start from './components(puzzle)/start.wav'
 
 
-
-
 import Card from 'react-bootstrap/Card'
-//import CardBody from 'react-bootstrap/CardBody'
-//import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 
 const successSound = new Audio(success)
@@ -22,14 +16,12 @@ const pieceSound = new Audio(piece)
 const startSound = new Audio(start)
 
 const Puzzle = () => {
+    const correctPositions = [...Array(16).keys()]
     const [positions, setPositions] = useState([...Array(16).keys()]);
     const [solved, setSolved] = useState(false);
-    const [correct, setCorrect] = useState([...Array(16).keys()])
     const [started, setStarted] = useState(false);
     const [timer, setTimer] = useState(0)
     const [running, setRunning] = useState(false)
-  
-    const [firstPass, setFirstPass] = useState(false)
 
     // Handling the start of a drag event
     const handleDragStart = (e,position) => {
@@ -76,7 +68,7 @@ const Puzzle = () => {
     }
 
     function isSolved() {
-        setSolved(JSON.stringify(positions) === JSON.stringify(correct))
+        setSolved(JSON.stringify(positions) === JSON.stringify(correctPositions))
         console.log(positions)
         console.log(solved)
     }
@@ -172,7 +164,7 @@ const Puzzle = () => {
                         backgroundImage: `url('${ReferenceImage}')`,
                         backgroundPosition: `-${x}px -${y}px`
                     }}
-                ></div>
+                >{correctPositions[pos]}</div>
                 );
             })
             }

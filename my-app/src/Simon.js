@@ -11,7 +11,6 @@ import Fail from './components(simon)/hurt.wav'
 import win from './components(simon)/success.wav'
 
 
-const colors = ["green", "red", "yellow", "blue"]
 const beep1 = new Audio(beepSound1)
 const beep2 = new Audio(beepSound2)
 const beep3 = new Audio(beepSound3)
@@ -19,7 +18,11 @@ const beep4 = new Audio(beepSound4)
 const failure = new Audio(Fail)
 const success = new Audio(win)
 
+
+
 function Simon() {
+  const colors = ["green", "red", "yellow", "blue"]
+
   const [sequence, setSequence] = useState([]);
   const [playing, setPlaying] = useState(false);
   const [playingIdx, setPlayingIdx] = useState(0);

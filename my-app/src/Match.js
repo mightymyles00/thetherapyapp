@@ -2,14 +2,19 @@ import './App.css';
 import Container from 'react-bootstrap/Container'
 import Card from 'react-bootstrap/Card'
 import { useEffect, useState } from 'react'
+
+//Pictures
 import Pic1 from './components(matching)/CardImages/1.png'
 import Pic2 from './components(matching)/CardImages/2.png'
 import Pic3 from './components(matching)/CardImages/3.png'
 import Pic4 from './components(matching)/CardImages/4.png'
 import Pic5 from './components(matching)/CardImages/5.png'
 import Pic6 from './components(matching)/CardImages/6.png'
+
+//Component
 import SingleCard from './components(matching)/SingleCard'
 
+//Sounds
 import miss from './components(matching)/miss.wav'
 import match from './components(matching)/match.wav'
 import success from './components(matching)/success.wav'
@@ -65,7 +70,6 @@ function Match() {
   const [timer, setTimer] = useState(0)
   const [running, setRunning] = useState(false)
   const [matchedCards, setMatchedCards] = useState(0)
-  const [completed, setCompleted] = useState(false)
 
   //shuffle cards
   const shuffleCards = () => {
@@ -94,24 +98,18 @@ function Match() {
     if (choiceOne && choiceTwo) {
       setDisabled(true)
 
-
       if (choiceOne.card === choiceTwo.card) {
         console.log("the cards match")
         setMatchedCards(matchedCards + 1)
         setCards(prevCards => {
           return prevCards.map(card => {
-            if(card.src === choiceOne.src) {
+            if (card.src === choiceOne.src) {
               matchSound.play()
               return {...card, matched: true}
-              
-
             } else {
               return card
             }
-            
-          }
-
-          )
+            })
         })
         resetTurn()
       } else {
@@ -145,7 +143,6 @@ function Match() {
   function checkMatched() {
     if (matchedCards === 6) {
       successSound.play()
-      setCompleted(true)
       setRunning(false)
       setTimeout(() => {alert("You Did It! " + "\n Finished in " +timer+ " seconds!")
         setRunning(false)

@@ -1,12 +1,10 @@
 import './components(reactionary)/Reactionary.css';
 import { useState, useRef, useEffect } from 'react';
 
-
 import beepSound from './components(reactionary)/beep.wav'
 import hitSound from './components(reactionary)/hit.mp3'
 import hurtSound from './components(reactionary)/hurt.wav'
 import swingSound from './components(reactionary)/swing.wav'
-
 
 import counter from './components(reactionary)/images/counter.jpg'
 import high from './components(reactionary)/images/high.jpg'
@@ -23,13 +21,6 @@ const hit = new Audio(hitSound)
 const swing = new Audio(swingSound)
 const hurt = new Audio(hurtSound)
 
-
-
-
-setInterval(function() {
-    
-}, 2000);
-
 function Reactionary() {  
     const initialTime = 600;
     const [startGame, setStartGame] = useState(false);
@@ -41,9 +32,7 @@ function Reactionary() {
     const [input, setInput] = useState('');
     const [attack, setAttack] = useState('')
     const BossAttacks = ["High", 'Mid', "Low"]
-    const Buttons = ["High", 'Mid', "Low"]
-    
-
+  
     const windowRef = useRef(null);
     const bgColor = [{backgroundColor: 'aqua'} ,{backgroundColor: 'green'}, {backgroundColor: 'red'}]
     const [windowColor, setWindowColor] = useState(0)
@@ -52,9 +41,6 @@ function Reactionary() {
     const lowRef = useRef(null);
     const [image, setImage] = useState(netural);
     const [buttonPressed, setButtonPressed] = useState(false)
-
-    const [blockWindow, setBlockWindow] = useState('') 
-
 
     const MAX_COUNTER_METER = 3;
     const [counterMeter, setCounterMeter] = useState(0);
